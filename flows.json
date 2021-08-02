@@ -1,0 +1,136 @@
+[
+    {
+        "id": "e24e48281440d92b",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "57659b628b907cdb",
+        "type": "mqtt out",
+        "z": "e24e48281440d92b",
+        "name": "AnaRoMa1310",
+        "topic": "codigoIoT/SIC/flow3/temp",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5ed48d35cc145e73",
+        "x": 480,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "66355f0d9fa459c0",
+        "type": "inject",
+        "z": "e24e48281440d92b",
+        "name": "temp20",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "20",
+        "payloadType": "num",
+        "x": 100,
+        "y": 60,
+        "wires": [
+            [
+                "0e16a50f2a01797e"
+            ]
+        ]
+    },
+    {
+        "id": "0e16a50f2a01797e",
+        "type": "function",
+        "z": "e24e48281440d92b",
+        "name": "tempTmnsg",
+        "func": "\n//'{\"ID\":\"anaRoMa\",\"Temp\":\"23.4\",\"mnsg\":\"Holi\"}'\n// Regresa el mensaje para que se envíe al sigueinte nodo\n\nvar temp = msg.payload;\n// temp=30, 30-20 to 30+15\n\n\n\nmsg.payload ='{\"ID\":\"anaRoMa\",\"Temp\":\"'+(temp+Math.random() * (15)).toString()+'\",\"mnsg\":\"Holi\"}'\n//msg.payload ='{\\\"ID\\\":\\\"anaRoMa\\\",\\\"Temp\\\":'+temp.toString()+' \\\",\\\"mnsg\\\":\\\"Holi\\\"}'\n\n// Regresa el mensaje para que se envíe al sigueinte nodo\n//'{\"ID\":\"anaRoMa\",\"Temp\":'+msg+' \",\"mnsg\":\"Holi\"}' \nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 140,
+        "wires": [
+            [
+                "57659b628b907cdb",
+                "88cafc0c89ec796c"
+            ]
+        ]
+    },
+    {
+        "id": "0589e1658ecf036a",
+        "type": "function",
+        "z": "e24e48281440d92b",
+        "name": "temp20t45",
+        "func": "var maximo=45\nvar minimo=20\nreturn Math.floor(Math.random() * ((maximo+1)-minimo)+minimo);\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 90,
+        "y": 280,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "88cafc0c89ec796c",
+        "type": "debug",
+        "z": "e24e48281440d92b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "5ed48d35cc145e73",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "3.66.119.222 ",
+        "port": "1883",
+        "clientid": "AnaRoMa1310",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]
